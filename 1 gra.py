@@ -138,30 +138,27 @@ with open(filepath,'r') as fp:
 
     
 
+def przyciski3(btn):
+    if btn=="Kop":
+        print ('save')
+        
+        win.addImage('im1','kilof1.gif')
+    elif btn=="Save":
+        print ('save')
+    elif btn=="Wyjscie":
+        
+        win.stop()
 
+win=gui("IDLE Game")
+win.setResizable(True)
 
-win=gui("IDLE Game "+lines2,"500x500")
+win.addLabel('l1','kurwa')
+win.addButtons(['Kop','Save','Wyjscie'],przyciski3)
 win.go()
-
-############################################################################
+###########################################################################
 
 #pygame.init()
 #screen=pygame.display.set_mode((640,480))
 #fps_clock = pygame.time.Clock()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
