@@ -1,5 +1,9 @@
 #Jakis idle game
 #idle game ktory ma dawac przyjemnosc z grania
+#dostep do tableta
+#D:\Python-Projekty\Idle game\Gracze
+#dostep CTO
+#"C:/Python34/Projekty CTO/Projekty 05.07.17/appJar/Idle games/1 gra/Gracze/
 
 from appJar import gui
 import random
@@ -18,7 +22,8 @@ def przyciski1(btn):
 
 ### Zaladuj dane
 
-        filepath=("C:/Python34/Projekty CTO/Projekty 05.07.17/appJar/Idle games/1 gra/Gracze/"+str(ent_log)+'.txt')
+        #filepath=("C:/Python34/Projekty CTO/Projekty 05.07.17/appJar/Idle games/1 gra/Gracze/"+str(ent_log)+'.txt')
+        filepath=("D:/Python-Projekty/Idle game/Gracze/"+str(ent_log)+'.txt')
         lines=[]
         with open(filepath,'r') as fp:
             for line in fp:
@@ -30,10 +35,8 @@ def przyciski1(btn):
         lines2=''.join(map(str,lines2))
 
 #HASLO
-        lines3=lines[10:16]
+        lines3=lines[10:17] #8znakow
         lines3=''.join(map(str,lines3))
-
-
 
 ### warunki na prawidlowosc loginow
         if str(ent_log)==str(lines2) and str(ent_haslo)==str(lines3):
@@ -52,11 +55,14 @@ def przyciski2(btn):
         imie=register1.getEntry("Imie")
         nazw=register1.getEntry("Nazwisko")
         data=register1.getEntry("Data urodzenia")
-        haslo=register1.getEntry("Hasło")
+        haslo=register1.getEntry("Hasło(8 znakow)")
         rephaslo=register1.getEntry("Powtórz hasło")
 
+        print (len(haslo))
+
 ##########################################################################
-# HASLO I LOGIN + LOSUJ
+# HASLO I LOGIN + LOSUJ + ZAPIS LOGINU I HASLA DO PLIKU .TXT
+
         imie_list=list(str(imie))
         imie_list1=imie_list[0:3]
         imie_list2=(''.join(imie_list1))
@@ -76,10 +82,34 @@ def przyciski2(btn):
         tuple1=''.join(map(str,tup1))
         login=imie_list2.lower()+nazw_list2.lower()+tuple1
 
+        
+        
+        if len(haslo)>8 and len(haslo)<8:
+            print ('zle haslo popraw')
+        elif len(haslo)==8:
+            print ('Dobra dlugosc hasla')
+
+
         if str(haslo)==str(rephaslo):
             register1.infoBox('Powodzenie rejestracji',['Login: '+login,
                               'Haslo: '+rephaslo])
+
+##########################################################################
+# Save register do pliku TXT
+
+            login1=str(login)
+            loginreg=(login1+".txt")
+            #filepath=("C:/Python34/Projekty CTO/Projekty 05.07.17/appJar/Idle games/1 gra/Gracze/"+str(loginreg))
+            filepath=("D:/Python-Projekty/Idle game/Gracze/"+str(loginreg))
+            f=open(filepath,'w')   
+            f.write(str(login)+'\n')
+            f.write(str(rephaslo)+'\n\n')
+            f.write("Imie: "+imie+'\n')
+            f.write("Nazwisko: "+nazw+'\n')
+            f.write("Data urodzenia: "+data+'\n')
+            f.close()
             register1.stop()
+
         elif str(haslo)!=str(rephaslo):
             register1.errorBox('Error','Popraw haslo')
 ##########################################################################           
@@ -89,21 +119,11 @@ def przyciski2(btn):
     elif btn=="Wyjdz":
         register1.stop()
 
-##########################################################################
-# Save register do pliku TXT
-
-    login1=str(login)
-    loginreg=(login1+".txt")
-    filepath=("C:/Python34/Projekty CTO/Projekty 05.07.17/appJar/Idle games/1 gra/Gracze/"+str(loginreg))
-    f=open(filepath,'w')   
-    f.write(str(login)+'\n')
-    f.write(str(rephaslo)+'\n\n')
-    f.write("Imie: "+imie+'\n')
-    f.write("Nazwisko: "+nazw+'\n')
-    f.write("Data urodzenia: "+data+'\n')
-    f.close()
+   
 
 ###########################################################################
+# PRZYCISKI DO GUI
+
 
 entry1=gui("==Zaloguj==")
 entry1.addLabelEntry("Login",0,0,0)
@@ -116,16 +136,19 @@ imie=register1.addLabelEntry("Imie",0,0,0)
 nazw=register1.addLabelEntry("Nazwisko",1,0,0)
 data=register1.addLabelEntry("Data urodzenia",2,0,0)
 
-register1.addSecretLabelEntry("Hasło",3,0,0)
+register1.addSecretLabelEntry("Hasło(8 znakow)",3,0,0)
 register1.addSecretLabelEntry("Powtórz hasło",4,0,0)
 register1.addButtons(["Rejestracja","Wyjdz"],przyciski2)
 
 
+
 entry1.go()
 
+##############################################################################################################
 # ladowanie loginu do wpisania do gry
 
-filepath=("C:/Python34/Projekty CTO/Projekty 05.07.17/appJar/Idle games/1 gra/Gracze/"+str(ent_log)+'.txt')
+#filepath=("C:/Python34/Projekty CTO/Projekty 05.07.17/appJar/Idle games/1 gra/Gracze/"+str(ent_log)+'.txt')
+filepath=("D:/Python-Projekty/Idle game/Gracze/"+str(ent_log)+'.txt')
 lines=[]
 with open(filepath,'r') as fp:
      for line in fp:
@@ -136,7 +159,8 @@ with open(filepath,'r') as fp:
         lines2=lines[0:10]
         lines2=''.join(map(str,lines2))
 
-    
+
+#############################################################################################################
 
 def przyciski3(btn):
     if btn=="Kop":
@@ -160,5 +184,3 @@ win.go()
 #pygame.init()
 #screen=pygame.display.set_mode((640,480))
 #fps_clock = pygame.time.Clock()
-
-
