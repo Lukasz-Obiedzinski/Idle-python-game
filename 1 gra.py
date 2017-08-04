@@ -7,8 +7,9 @@
 
 from appJar import gui
 import random
+import time
 #import pygame
-
+      
 def przyciski1(btn):
 
     if btn=="Wyjdz":
@@ -22,8 +23,8 @@ def przyciski1(btn):
 
 ### Zaladuj dane
 
-        #filepath=("C:/Python34/Projekty CTO/Projekty 05.07.17/appJar/Idle games/1 gra/Gracze/"+str(ent_log)+'.txt')
-        filepath=("D:/Python-Projekty/Idle game/Gracze/"+str(ent_log)+'.txt')
+        filepath=("C:/Python34/Projekty CTO/Projekty 05.07.17/appJar/Idle games/1 gra/Gracze/"+str(ent_log)+'.txt')
+        #filepath=("D:/Python-Projekty/Idle game/Gracze/"+str(ent_log)+'.txt')
         lines=[]
         with open(filepath,'r') as fp:
             for line in fp:
@@ -95,8 +96,8 @@ def przyciski2(btn):
 
                 login1=str(login)
                 loginreg=(login1+".txt")
-                #filepath=("C:/Python34/Projekty CTO/Projekty 05.07.17/appJar/Idle games/1 gra/Gracze/"+str(loginreg))
-                filepath=("D:/Python-Projekty/Idle game/Gracze/"+str(loginreg))
+                filepath=("C:/Python34/Projekty CTO/Projekty 05.07.17/appJar/Idle games/1 gra/Gracze/"+str(loginreg))
+                #filepath=("D:/Python-Projekty/Idle game/Gracze/"+str(loginreg))
                 f=open(filepath,'w')   
                 f.write(str(login)+'\n')
                 f.write(str(rephaslo)+'\n\n')
@@ -124,9 +125,7 @@ def przyciski2(btn):
 entry1=gui("==Zaloguj==")
 entry1.addLabelEntry("Login",0,0,0)
 entry1.addSecretLabelEntry("Hasło",0,1,0)
-entry1.addButtons(["Zaloguj","Rejestruj","Wyjdz"],przyciski1,1,1,0)
-entry1.addCheckBox("Pokaz haslo", 0,2,1,0)
-
+entry1.addButtons(["Zaloguj","Rejestruj","Wyjdz"],przyciski1,2,2,0)
 
 register1=gui("REJESTRACJA")
 imie=register1.addLabelEntry("Imie",0,0,0)
@@ -139,46 +138,80 @@ register1.addButtons(["Rejestracja","Wyjdz"],przyciski2)
 
 
 
-entry1.go()
+
 
 ##############################################################################################################
 # ladowanie loginu do wpisania do gry
 
 #filepath=("C:/Python34/Projekty CTO/Projekty 05.07.17/appJar/Idle games/1 gra/Gracze/"+str(ent_log)+'.txt')
-filepath=("D:/Python-Projekty/Idle game/Gracze/"+str(ent_log)+'.txt')
-lines=[]
-with open(filepath,'r') as fp:
-     for line in fp:
-        line=line.rstrip()
-        lines+=line
-        lines1=''.join(map(str,lines))
+#filepath=("D:/Python-Projekty/Idle game/Gracze/"+str(ent_log)+'.txt')
+#lines=[]
+#with open(filepath,'r') as fp:
+#     for line in fp:
+#        line=line.rstrip()
+#        lines+=line
+#        lines1=''.join(map(str,lines))
 #LOGIN
-        lines2=lines[0:10]
-        lines2=''.join(map(str,lines2))
+#        lines2=lines[0:10]
+#        lines2=''.join(map(str,lines2))
 
 
 #############################################################################################################
+# IDLE 
 
-def przyciski3(btn):
-    licznik=1
-    while licznik!=0:
-        if btn=="Kop":    
-            print (licznik)
-            licznik+=licznik
-            print (licznik)
-        elif btn!="Kop":
-            pass
-        #win.addImage('im1','kilof1.gif')
-    if btn=="Save":
-        print ('save')
-    elif btn=="Wyjscie":
-        win.stop()
+def przycisk1(btn):
+
+################################################################################
+### Licznik klikniec
+    if btn=="Kop":
+
+        licznik+=1
+        suma=int(licznik)
+        print (licznik)
+ 
+        win.setLabel("K1",suma)
+        #win.setImage('im1','kilof2.gif')
+        #time.sleep((1/15))
+        #win.setImage('im1','kilof1.gif')
+        global licznik
+        global suma
+    elif btn!="Kop":
+        pass
+
+def przycisk2(btn):
+    if btn=="Kup":
+        global wartosc
+        wartosc=30
+        win.setLabel("K2",wartosc)
+        global wartosc
+
+def przycisk3(btn):
+    global nowe_pieniadze
+    if btn=="Pieniadze":
+        
+        pieniadze=suma
+        win.setLabel("S1",pieniadze)
+        pieniadze=nowe_pieniadze
+        win.disableButton("Pieniadze",przycisk3)
+        
+
+global suma
+global licznik
+global pieniadze
+global nowe_pieniadze
+licznik=0
 win=gui("IDLE Game")
 win.setResizable(True)
-
-win.addLabel('l1','kurwa')
-win.addButtons(['Kop','Save','Wyjscie'],przyciski3)
+win.setBg("white")
+#win.addImage('im1','kilof1.gif',0,0,0,0)
+win.addButton('Kop',przycisk1)
+win.addButton('Kup',przycisk2)
+win.addButton('Pieniadze',przycisk3)
+win.addLabel("K1")
+win.addLabel("K2")
+win.addLabel("S1")
 win.go()
+#entry1.go()
 ###########################################################################
 
 #pygame.init()
